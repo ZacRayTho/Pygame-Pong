@@ -3,7 +3,7 @@ import pygame as pg
 from settings import *
 from frog import *
 from car import *
-
+from float import *
 
 
 bg = pg.image.load('bg.png')
@@ -22,9 +22,7 @@ class Game:
                           Car(self, -350, 400, 1, .03), Car(self, -150, 400, 1, .03), Car(self, 50, 400, 1, .03),
                           Car(self, 800, 350, -1, .03), Car(self, 1000, 350, -1, .03), Car(self, 1200, 350, -1, .03),]
         
-
-
-
+        self.ride = [Float(self, 750, 250, -1, .03, True)]
 
     def update(self):
         for event in pg.event.get():
@@ -66,6 +64,13 @@ class Game:
         for x in self.obstacles:
             if x.hitbox.colliderect(self.frog.hitbox):
                 print('Collision with', x)
+
+            x.update()
+            x.draw()
+
+        for x in self.ride:
+            if x.hitbox.colliderect(self.frog.hitbox):
+                self.frog.x += x.speed * x.direction
 
             x.update()
             x.draw()
